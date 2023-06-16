@@ -4,6 +4,7 @@ import csv
 from datetime import datetime, timedelta
 from exceptions.InvalidDateException import InvalidDateComparisonError
 from exceptions.InvalidIntervallException import InvalidIntervallError
+from converter import *
 
 '''
 @params ticker:"ticker" + USDT -> "BTCUSDT
@@ -86,28 +87,10 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
         # Zum nächsten Tag wechseln
         current_date = next_date
 
-# Beispielaufruf für Bitcoin (BTC) vom 1. Januar 2022 bis 31. Dezember 2022 mit einem Intervall von 30 Minuten
+'''# Beispielaufruf für Bitcoin (BTC) vom 1. Januar 2022 bis 31. Dezember 2022 mit einem Intervall von 30 Minuten
 start_date = datetime(2022, 12, 20)
 end_date = datetime(2022, 12, 31)
-interval_minutes = 30
-download_historical_price_data("BTCUSDT", start_date, end_date, interval_minutes)
+interval_minutes = 1'''
 
 
 
-'''
-[
-  [
-    1499040000000,      // Kline open time
-    "0.01634790",       // Open price
-    "0.80000000",       // High price
-    "0.01575800",       // Low price
-    "0.01577100",       // Close price
-    "148976.11427815",  // Volume
-    1499644799999,      // Kline Close time
-    "2434.19055334",    // Quote asset volume
-    308,                // Number of trades
-    "1756.87402397",    // Taker buy base asset volume
-    "28.46694368",      // Taker buy quote asset volume
-    "0"                 // Unused field, ignore.
-  ]
-]'''
