@@ -1,0 +1,452 @@
+[
+    {
+        "Rank": "1",
+        "Ticker": "BTC",
+        "Name": "Bitcoin",
+        "Price": "25553.0",
+        "Market Cap": "495917212201",
+        "Volume": "12864527856",
+        "Change (24h)": "2.62436"
+    },
+    {
+        "Rank": "2",
+        "Ticker": "ETH",
+        "Name": "Ethereum",
+        "Price": "1668.61",
+        "Market Cap": "200572200819",
+        "Volume": "6529584158",
+        "Change (24h)": "2.02941"
+    },
+    {
+        "Rank": "3",
+        "Ticker": "USDT",
+        "Name": "Tether",
+        "Price": "0.99918",
+        "Market Cap": "83494306890",
+        "Volume": "20230991922",
+        "Change (24h)": "0.15535"
+    },
+    {
+        "Rank": "4",
+        "Ticker": "BNB",
+        "Name": "BNB",
+        "Price": "236.99",
+        "Market Cap": "36934269981",
+        "Volume": "696623537",
+        "Change (24h)": "0.60765"
+    },
+    {
+        "Rank": "5",
+        "Ticker": "USDC",
+        "Name": "USD Coin",
+        "Price": "1.0",
+        "Market Cap": "28211314951",
+        "Volume": "4024124519",
+        "Change (24h)": "-0.01296"
+    },
+    {
+        "Rank": "6",
+        "Ticker": "XRP",
+        "Name": "XRP",
+        "Price": "0.478237",
+        "Market Cap": "24866398743",
+        "Volume": "1021442718",
+        "Change (24h)": "0.72367"
+    },
+    {
+        "Rank": "7",
+        "Ticker": "STETH",
+        "Name": "Lido Staked Ether",
+        "Price": "1668.44",
+        "Market Cap": "12060835997",
+        "Volume": "16326859",
+        "Change (24h)": "2.07243"
+    },
+    {
+        "Rank": "8",
+        "Ticker": "ADA",
+        "Name": "Cardano",
+        "Price": "0.260589",
+        "Market Cap": "9133967463",
+        "Volume": "206076536",
+        "Change (24h)": "1.66582"
+    },
+    {
+        "Rank": "9",
+        "Ticker": "DOGE",
+        "Name": "Dogecoin",
+        "Price": "0.0618",
+        "Market Cap": "8639833229",
+        "Volume": "246237528",
+        "Change (24h)": "1.81574"
+    },
+    {
+        "Rank": "10",
+        "Ticker": "TRX",
+        "Name": "TRON",
+        "Price": "0.070149",
+        "Market Cap": "6318644534",
+        "Volume": "286209517",
+        "Change (24h)": "0.67815"
+    },
+    {
+        "Rank": "11",
+        "Ticker": "SOL",
+        "Name": "Solana",
+        "Price": "14.77",
+        "Market Cap": "5896847722",
+        "Volume": "296131177",
+        "Change (24h)": "0.67736"
+    },
+    {
+        "Rank": "12",
+        "Ticker": "LTC",
+        "Name": "Litecoin",
+        "Price": "75.3",
+        "Market Cap": "5509654317",
+        "Volume": "341206545",
+        "Change (24h)": "3.29591"
+    },
+    {
+        "Rank": "13",
+        "Ticker": "MATIC",
+        "Name": "Polygon",
+        "Price": "0.58632",
+        "Market Cap": "5448039523",
+        "Volume": "569961063",
+        "Change (24h)": "-3.26039"
+    },
+    {
+        "Rank": "14",
+        "Ticker": "DOT",
+        "Name": "Polkadot",
+        "Price": "4.36",
+        "Market Cap": "5426544553",
+        "Volume": "154255543",
+        "Change (24h)": "0.6317"
+    },
+    {
+        "Rank": "15",
+        "Ticker": "DAI",
+        "Name": "Dai",
+        "Price": "1.0",
+        "Market Cap": "4393674917",
+        "Volume": "223336378",
+        "Change (24h)": "0.01316"
+    },
+    {
+        "Rank": "16",
+        "Ticker": "BUSD",
+        "Name": "Binance USD",
+        "Price": "0.9995",
+        "Market Cap": "4339517704",
+        "Volume": "2173073829",
+        "Change (24h)": "0.13272"
+    },
+    {
+        "Rank": "17",
+        "Ticker": "WBTC",
+        "Name": "Wrapped Bitcoin",
+        "Price": "25559.0",
+        "Market Cap": "4011284915",
+        "Volume": "112883739",
+        "Change (24h)": "2.6041"
+    },
+    {
+        "Rank": "18",
+        "Ticker": "SHIB",
+        "Name": "Shiba Inu",
+        "Price": "6.73e-06",
+        "Market Cap": "3966405648",
+        "Volume": "70095290",
+        "Change (24h)": "2.48584"
+    },
+    {
+        "Rank": "19",
+        "Ticker": "AVAX",
+        "Name": "Avalanche",
+        "Price": "11.42",
+        "Market Cap": "3939230057",
+        "Volume": "110926803",
+        "Change (24h)": "2.72077"
+    },
+    {
+        "Rank": "20",
+        "Ticker": "UNI",
+        "Name": "Uniswap",
+        "Price": "4.44",
+        "Market Cap": "3343161216",
+        "Volume": "66215961",
+        "Change (24h)": "2.00692"
+    },
+    {
+        "Rank": "21",
+        "Ticker": "LEO",
+        "Name": "LEO Token",
+        "Price": "3.51",
+        "Market Cap": "3263603890",
+        "Volume": "531692",
+        "Change (24h)": "-0.74748"
+    },
+    {
+        "Rank": "22",
+        "Ticker": "TUSD",
+        "Name": "TrueUSD",
+        "Price": "1.002",
+        "Market Cap": "3103083972",
+        "Volume": "1648844720",
+        "Change (24h)": "0.19393"
+    },
+    {
+        "Rank": "23",
+        "Ticker": "LINK",
+        "Name": "Chainlink",
+        "Price": "5.24",
+        "Market Cap": "2708889873",
+        "Volume": "120336249",
+        "Change (24h)": "0.15719"
+    },
+    {
+        "Rank": "24",
+        "Ticker": "ATOM",
+        "Name": "Cosmos Hub",
+        "Price": "8.77",
+        "Market Cap": "2564813513",
+        "Volume": "204528629",
+        "Change (24h)": "2.5018"
+    },
+    {
+        "Rank": "25",
+        "Ticker": "XMR",
+        "Name": "Monero",
+        "Price": "136.89",
+        "Market Cap": "2484773313",
+        "Volume": "70916722",
+        "Change (24h)": "2.73433"
+    },
+    {
+        "Rank": "26",
+        "Ticker": "OKB",
+        "Name": "OKB",
+        "Price": "40.43",
+        "Market Cap": "2426185835",
+        "Volume": "5157159",
+        "Change (24h)": "4.04499"
+    },
+    {
+        "Rank": "28",
+        "Ticker": "ETC",
+        "Name": "Ethereum Classic",
+        "Price": "15.0",
+        "Market Cap": "2121846229",
+        "Volume": "71501039",
+        "Change (24h)": "1.56395"
+    },
+    {
+        "Rank": "27",
+        "Ticker": "XLM",
+        "Name": "Stellar",
+        "Price": "0.078563",
+        "Market Cap": "2113418547",
+        "Volume": "54705838",
+        "Change (24h)": "1.44634"
+    },
+    {
+        "Rank": "29",
+        "Ticker": "TON",
+        "Name": "Toncoin",
+        "Price": "1.38",
+        "Market Cap": "2033561300",
+        "Volume": "4261417",
+        "Change (24h)": "-0.23154"
+    },
+    {
+        "Rank": "30",
+        "Ticker": "BCH",
+        "Name": "Bitcoin Cash",
+        "Price": "104.51",
+        "Market Cap": "2029893359",
+        "Volume": "52636142",
+        "Change (24h)": "1.62018"
+    },
+    {
+        "Rank": "31",
+        "Ticker": "ICP",
+        "Name": "Internet Computer",
+        "Price": "3.99",
+        "Market Cap": "1746040135",
+        "Volume": "32307840",
+        "Change (24h)": "6.13738"
+    },
+    {
+        "Rank": "32",
+        "Ticker": "FIL",
+        "Name": "Filecoin",
+        "Price": "3.62",
+        "Market Cap": "1553893473",
+        "Volume": "83190907",
+        "Change (24h)": "2.48507"
+    },
+    {
+        "Rank": "33",
+        "Ticker": "LDO",
+        "Name": "Lido DAO",
+        "Price": "1.72",
+        "Market Cap": "1509182272",
+        "Volume": "31545159",
+        "Change (24h)": "5.06552"
+    },
+    {
+        "Rank": "34",
+        "Ticker": "QNT",
+        "Name": "Quant",
+        "Price": "99.11",
+        "Market Cap": "1441531786",
+        "Volume": "19995930",
+        "Change (24h)": "2.27005"
+    },
+    {
+        "Rank": "35",
+        "Ticker": "CRO",
+        "Name": "Cronos",
+        "Price": "0.052799",
+        "Market Cap": "1378899725",
+        "Volume": "6105555",
+        "Change (24h)": "1.42003"
+    },
+    {
+        "Rank": "36",
+        "Ticker": "HBAR",
+        "Name": "Hedera",
+        "Price": "0.04334513",
+        "Market Cap": "1370964252",
+        "Volume": "35496417",
+        "Change (24h)": "0.8442"
+    },
+    {
+        "Rank": "37",
+        "Ticker": "APT",
+        "Name": "Aptos",
+        "Price": "6.2",
+        "Market Cap": "1278209946",
+        "Volume": "50259258",
+        "Change (24h)": "2.70143"
+    },
+    {
+        "Rank": "38",
+        "Ticker": "ARB",
+        "Name": "Arbitrum",
+        "Price": "0.95449",
+        "Market Cap": "1215584492",
+        "Volume": "133010588",
+        "Change (24h)": "3.72394"
+    },
+    {
+        "Rank": "39",
+        "Ticker": "NEAR",
+        "Name": "NEAR Protocol",
+        "Price": "1.2",
+        "Market Cap": "1109571689",
+        "Volume": "43608454",
+        "Change (24h)": "2.16138"
+    },
+    {
+        "Rank": "40",
+        "Ticker": "VET",
+        "Name": "VeChain",
+        "Price": "0.01476979",
+        "Market Cap": "1073982800",
+        "Volume": "63562601",
+        "Change (24h)": "-4.10416"
+    },
+    {
+        "Rank": "41",
+        "Ticker": "USDP",
+        "Name": "Pax Dollar",
+        "Price": "0.999986",
+        "Market Cap": "1007255521",
+        "Volume": "7279461",
+        "Change (24h)": "0.12415"
+    },
+    {
+        "Rank": "42",
+        "Ticker": "FRAX",
+        "Name": "Frax",
+        "Price": "0.998532",
+        "Market Cap": "1002820170",
+        "Volume": "94948016",
+        "Change (24h)": "-0.00968"
+    },
+    {
+        "Rank": "43",
+        "Ticker": "GRT",
+        "Name": "The Graph",
+        "Price": "0.097528",
+        "Market Cap": "879069388",
+        "Volume": "38715572",
+        "Change (24h)": "2.80971"
+    },
+    {
+        "Rank": "44",
+        "Ticker": "ALGO",
+        "Name": "Algorand",
+        "Price": "0.111647",
+        "Market Cap": "809191353",
+        "Volume": "38799492",
+        "Change (24h)": "2.23114"
+    },
+    {
+        "Rank": "45",
+        "Ticker": "RETH",
+        "Name": "Rocket Pool ETH",
+        "Price": "1791.57",
+        "Market Cap": "799267834",
+        "Volume": "13146079",
+        "Change (24h)": "1.94079"
+    },
+    {
+        "Rank": "46",
+        "Ticker": "RPL",
+        "Name": "Rocket Pool",
+        "Price": "40.08",
+        "Market Cap": "780776125",
+        "Volume": "3704578",
+        "Change (24h)": "3.77403"
+    },
+    {
+        "Rank": "47",
+        "Ticker": "APE",
+        "Name": "ApeCoin",
+        "Price": "2.09",
+        "Market Cap": "770116743",
+        "Volume": "113262456",
+        "Change (24h)": "0.30918"
+    },
+    {
+        "Rank": "49",
+        "Ticker": "EGLD",
+        "Name": "MultiversX",
+        "Price": "29.87",
+        "Market Cap": "763730674",
+        "Volume": "14189276",
+        "Change (24h)": "1.52568"
+    },
+    {
+        "Rank": "48",
+        "Ticker": "STX",
+        "Name": "Stacks",
+        "Price": "0.550756",
+        "Market Cap": "762498341",
+        "Volume": "68178122",
+        "Change (24h)": "13.2759"
+    },
+    {
+        "Rank": "50",
+        "Ticker": "USDD",
+        "Name": "USDD",
+        "Price": "0.998882",
+        "Market Cap": "732557762",
+        "Volume": "13588594",
+        "Change (24h)": "0.1009"
+    }
+]
