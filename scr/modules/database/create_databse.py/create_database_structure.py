@@ -38,13 +38,16 @@ def init_database():
             CREATE TABLE IF NOT EXISTS PriceData (
                 ticker TEXT NOT NULL,
                 timestamp DATE NOT NULL,
-                timestamp_offset TEXT NOT NULL,
                 open REAL,
                 high REAL,
                 low REAL,
                 close REAL,
-                adj_close REAL,
                 volume REAL,
+                close_time timestamp,
+                quote_asset_volume REAL,
+                number_of_trades INTEGER,
+                taker_buy_base_asset_volume REAL,
+                taker_buy_quote_asset_volume REAL,
                 PRIMARY KEY (ticker, timestamp),
                 FOREIGN KEY (ticker) REFERENCES Assets (ticker)
             )

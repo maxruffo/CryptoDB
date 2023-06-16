@@ -66,9 +66,16 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
                 # Daten in die CSV-Datei schreiben
                 with open(filepath, 'w', newline='') as file:
                     writer = csv.writer(file)
+                    #Header definieren
+                    header = ["Timestamp", "Open", "High", "Low", "Close", "Volume", "Kline_Close_Time", "Quote_Asset_Volume", "Number_of_Trades", "Taker_Buy_Base_Asset_Volume", "Taker_Buy_Quote_Asset_Volume"]
+                    writer.writerow(header)
+
+                    #Daten abspeichern
                     for row in data:
                         timestamp = datetime.fromtimestamp(row[0] / 1000)  # Umwandlung des Unix-Zeitstempels in datetime
-                        writer.writerow([timestamp] + row[1:])  # Schreiben der Zeile mit dem angepassten Datum
+                        kline_close_time = datetime.fromtimestamp(row[6] / 1000)  # Umwandlung der Kline_Close_Time in Unix-Zeit
+                        modified_row = [timestamp] + row[1:6] + [kline_close_time] + row[7:-1]  # Schreiben der Zeile mit angepasstem Datum
+                        writer.writerow(modified_row)
 
                 print(f"Historische Preisdaten für {ticker} am {date_str} wurden gespeichert.")
 
@@ -84,3 +91,23 @@ start_date = datetime(2022, 12, 20)
 end_date = datetime(2022, 12, 31)
 interval_minutes = 30
 download_historical_price_data("BTCUSDT", start_date, end_date, interval_minutes)
+
+
+
+'''
+[
+  [
+    1499040000000,      // Kline open time
+    "0.01634790",       // Open price
+    "0.80000000",       // High price
+    "0.01575800",       // Low price
+    "0.01577100",       // Close price
+    "148976.11427815",  // Volume
+    1499644799999,      // Kline Close time
+    "2434.19055334",    // Quote asset volume
+    308,                // Number of trades
+    "1756.87402397",    // Taker buy base asset volume
+    "28.46694368",      // Taker buy quote asset volume
+    "0"                 // Unused field, ignore.
+  ]
+]'''
