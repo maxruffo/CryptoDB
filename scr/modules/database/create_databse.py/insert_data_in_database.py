@@ -1,5 +1,4 @@
 import os
-import json
 import sqlite3
 import csv
 
@@ -7,36 +6,31 @@ database_folder = 'resources/database'
 database_file = 'all_crypto_database.db'
 database_path = os.path.join(database_folder, database_file)
 pricedata_folder = 'resources/pricedata'
-ticker_list_file = 'config/ticker_list.json'
 
 # Verbindung zur Datenbank herstellen
 conn = sqlite3.connect(database_path)
 cursor = conn.cursor()
 
-# Lade die Ticker-Liste aus der JSON-Datei
-with open(ticker_list_file, 'r') as file:
-    ticker_list = json.load(file)
-
 # Durchsuche den pricedata-Ordner
 for folder_name in os.listdir(pricedata_folder):
     folder_path = os.path.join(pricedata_folder, folder_name)
     if os.path.isdir(folder_path):
-        # Überprüfe, ob der Ordner in der Ticker-Liste enthalten ist
-        if folder_name in ticker_list:
-            # Füge den Ordner-Namen als Ticker in die Assets-Tabelle ein, falls er noch nicht vorhanden ist
-            cursor.execute("INSERT OR IGNORE INTO Assets (ticker) VALUES (?)", (folder_name,))
+        ticker_name = folder_name  # Verwende den Namen des Ordners als Ticker
 
-            # Durchsuche die CSV-Dateien im Ordner
-            for file_name in os.listdir(folder_path):
-                if file_name.endswith('.csv'):
-                    file_path = os.path.join(folder_path, file_name)
-                    with open(file_path, 'r') as file:
-                        reader = csv.reader(file)
-                        next(reader)  # Überspringe den Header
+        # Füge den Ordner-Namen als Ticker in die Assets-Tabelle ein, falls er noch nicht vorhanden ist
+        cursor.execute("INSERT OR IGNORE INTO Assets (ticker) VALUES (?)", (ticker_name,))
 
-                        for row in reader:
-                            data_row = [folder_name] + row
-                            cursor.execute("INSERT OR IGNORE INTO PriceData VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data_row)
+        # Durchsuche die CSV-Dateien im Ordner
+        for file_name in os.listdir(folder_path):
+            if file_name.endswith('.csv'):
+                file_path = os.path.join(folder_path, file_name)
+                with open(file_path, 'r') as file:
+                    reader = csv.reader(file)
+                    next(reader)  # Überspringe den Header
+
+                    for row in reader:
+                        data_row = [ticker_name] + row
+                        cursor.execute("INSERT OR IGNORE INTO PriceData VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data_row)
 
 # Änderungen speichern und Verbindung zur Datenbank schließen
 conn.commit()
