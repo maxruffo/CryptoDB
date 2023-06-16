@@ -1,0 +1,3 @@
+
+class InvalidIntervallError(Exception):
+    pass
