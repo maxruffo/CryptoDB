@@ -89,7 +89,7 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
 
 '''# Beispielaufruf für Bitcoin (BTC) vom 1. Januar 2022 bis 31. Dezember 2022 mit einem Intervall von 30 Minuten
 start_date = datetime(2022, 12, 20)
-end_date = datetime(2022, 12, 31)
+end_date = datetime(2022, 12, 31)"""
 interval_minutes = 1'''
 
 

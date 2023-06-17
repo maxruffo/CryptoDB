@@ -76,4 +76,14 @@ extract_tickers_from_json(input_file, output_file)"""
 def calculate_start_end_dates(num_days):
     end_date = datetime.now()
     start_date = end_date - timedelta(days=num_days)
+    print(end_date)
+    print(type(end_date))
+    print(start_date)
+    print(type(start_date))
+    if(type(start_date)==datetime):
+        print("gunt")
     return start_date, end_date
+
+
+
+calculate_start_end_dates(10)
