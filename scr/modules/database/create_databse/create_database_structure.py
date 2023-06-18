@@ -8,7 +8,7 @@ import os
 
 def init_database():
     database_folder = 'resources/database'
-    database_file = 'all_crypto_database.db'
+    database_file = 'database.db'
     database_path = os.path.join(database_folder, database_file)
 
     # Überprüfen, ob der Ordner bereits existiert, andernfalls erstellen
@@ -67,5 +67,5 @@ def init_database():
 Für die erstellung der Big Database wo sich alle Ticker und Price Daten befinden
 '''
 
-init_database()
+
 

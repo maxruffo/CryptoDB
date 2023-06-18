@@ -4,7 +4,7 @@ import csv
 from datetime import datetime, timedelta
 from exceptions.InvalidDateException import InvalidDateComparisonError
 from exceptions.InvalidIntervallException import InvalidIntervallError
-from converter import *
+
 
 '''
 @params ticker:"ticker" + USDT -> "BTCUSDT
