@@ -41,10 +41,34 @@ def get_tickers():
     else:
         print("Die JSON-Datei existiert nicht.")
     
-    
+
 def download_data_for_dates(ticker_list, start_date, end_date, interval_minutes):
-    for ticker in ticker_list:
-        download_historical_price_data(ticker, start_date, end_date, interval_minutes)
+    num_threads = min(len(ticker_list), threading.active_count() + 1)
+
+    def download_data(tickers):
+        for ticker in tickers:
+            download_historical_price_data(ticker, start_date, end_date, interval_minutes)
+
+    # Liste der Aufgaben für jeden Thread aufteilen
+    task_list = []
+    chunk_size = len(ticker_list) // num_threads
+
+    for i in range(num_threads):
+        start_index = i * chunk_size
+        end_index = start_index + chunk_size if i < num_threads - 1 else None
+        task_list.append(ticker_list[start_index:end_index])
+
+    # Threads erstellen und ausführen
+    threads = []
+    for task in task_list:
+        thread = threading.Thread(target=download_data, args=(task,))
+        thread.start()
+        threads.append(thread)
+
+    # Warten, bis alle Threads ihre Aufgaben abgeschlossen haben
+    for thread in threads:
+        thread.join()
+
 
 
 def download_data_for_ndays(tickers, ndays, interval_minutes):
@@ -53,9 +77,9 @@ def download_data_for_ndays(tickers, ndays, interval_minutes):
 
 
 
-tickers_list = ["BTC", "ETH", "LTC", "XRP", "ADA", "DOGE"]
+tickers_list = ["BTCUSDT", "ETHUSDT", "LTCUSDT", "XRPUSDT", "ADAUSDT", "DOGEUSDT"]
 start_date = datetime(2023, 1, 1)
-end_date = datetime(2023, 6, 30)
+end_date = datetime(2023, 1, 30)
 interval_minutes = 30
 
 download_data_for_dates(tickers_list, start_date, end_date, interval_minutes)
