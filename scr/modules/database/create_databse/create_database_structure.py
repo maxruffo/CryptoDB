@@ -6,7 +6,7 @@ import os
 #from insert_pricedata.insert_data_into_pricedata import _insert_pricedata
 
 
-def init_database():
+def init_database(database_path = 'resources/database', database_name = 'database.db'):
     database_folder = 'resources/database'
     database_file = 'database.db'
     database_path = os.path.join(database_folder, database_file)
