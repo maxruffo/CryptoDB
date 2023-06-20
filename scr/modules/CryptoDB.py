@@ -2,6 +2,8 @@ import json
 import os
 from datetime import datetime, date
 import sys
+import sqlite3
+import pandas as pd
 from .scraper.scraper_interface import download_data_for_dates,download_data_for_ndays,delete_pricedata_folder
 from .database.database_interface import DatabaseManager
 # Jetzt können Sie die Methoden und Klassen aus "scraper_interface" verwenden
@@ -110,9 +112,7 @@ class CryptoDB:
         self.databasename = config["databasename"]
         self.pricedatafolder = config["pricedatafolder"]
 
-    
-    def run_jobs(self):
-
+    def create_database(self):
         if self.ndays:
             download_data_for_ndays(ticker_list=self.tickers, num_days=self.ndays, interval_minutes=self.interval)
 
@@ -121,16 +121,33 @@ class CryptoDB:
         
 
         if self.database == True:
-            self.db = DatabaseManager()
+            db = DatabaseManager()
+            db.create_and_fill_database()
+            self.db = db
+            
             if self.csv == False:
                 delete_pricedata_folder()
+
+    def connect_database(self, databasefolder = None, databasename = None):
+        self.db.connect_to_existing_database(databasefolder=databasefolder,databasename=databasename)
+
+    
 
     def run_app(self):
         db = self.db
         db.start_database_app()
 
         
+    def get_price_data(self,ticker_list = None):
 
+        if ticker_list == None:
+            ticker_list = self.tickers
+
+        elif isinstance(ticker_list, str):
+            ticker_list = [ticker_list]
+
+        dataframes =  self.db.get_price_data(ticker_list=ticker_list)
+        return dataframes
 
             
             
