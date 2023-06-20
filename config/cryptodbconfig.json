@@ -1,16 +1,1 @@
-{
-    "tickers": [
-      "BTCUSDT",
-      "ETHUSDT",
-      "BNBUSDT"
-    ],
-    "database": true,
-    "csv": true,
-    "ndays": 30,
-    "start_date": "2023-05-20",
-    "end_date": "2023-06-19",
-    "databasefolder": "resources/database",
-    "databasename": "database.db",
-    "pricedatafolder": "resource/pricedata"
-  }
-  
+{"tickers": ["BTCUSDT", "ETHUSDT", "BNBUSDT"], "database": true, "csv": false, "ndays": 30, "interval": 15, "start_date": null, "end_date": null, "databasefolder": "resources/database", "databasename": "database.db", "pricedatafolder": "resource/pricedata"}

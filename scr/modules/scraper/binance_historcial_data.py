@@ -2,8 +2,7 @@ import os
 import requests
 import csv
 from datetime import datetime, timedelta
-from exceptions.InvalidDateException import InvalidDateComparisonError
-from exceptions.InvalidIntervallException import InvalidIntervallError
+
 
 
 '''
@@ -17,12 +16,12 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
     #Exception Kontrolle
 
     if start_date > end_date:
-        raise InvalidDateComparisonError("Start date is after the End date")
+        raise Exception("Start date is after the End date")
     
 
     valid_intervals = [1, 3, 5, 15, 30]
     if interval_minutes not in valid_intervals:
-        raise InvalidIntervallError("This is intervall isnt available, please use: [1, 3, 5, 15, 30]")
+        raise Exception("This is intervall isnt available, please use: [1, 3, 5, 15, 30]")
 
 
 

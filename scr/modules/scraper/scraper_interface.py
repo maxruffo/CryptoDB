@@ -2,8 +2,10 @@ import json
 import os
 import threading
 from datetime import datetime, timedelta
+import shutil
+from .binance_historcial_data import download_historical_price_data
 
-from binance_historcial_data import download_historical_price_data
+__all__ = ['download_historical_price_data', 'binance_historcial_data','download_data_for_dates', 'download_data_for_ndays', 'update_data_for_yesterday', 'delete_pricedata_folder']
 
 
 #FUNCTION: set_tickers(ticker) -> @params ticker: a list of ticker is given its sets the config/ticker_list.json the list of ticker that where given
@@ -145,15 +147,20 @@ def update_data_for_yesterday(ticker_list, interval_minutes):
     for thread in threads:
         thread.join()
 
+  
+def delete_pricedata_folder():
+    folder_path = "resources/pricedata"
+
+    if os.path.exists(folder_path):
+        try:
+            shutil.rmtree(folder_path)
+            print(f"Folder '{folder_path}' deleted successfully.")
+        except OSError as e:
+            print(f"Error deleting folder '{folder_path}': {e}")
+    else:
+        print(f"Folder '{folder_path}' does not exist.")
 
 
 
-tickers_list = ["BTCUSDT", "ETHUSDT", "LTCUSDT", "XRPUSDT", "ADAUSDT", "DOGEUSDT"]
-start_date = datetime(2023, 1, 1)
-end_date = datetime(2023, 1, 30)
-print(start_date)
-print(end_date)
-interval_minutes = 30
-days = 5
 
-download_data_for_ndays(tickers_list, days, interval_minutes)
+

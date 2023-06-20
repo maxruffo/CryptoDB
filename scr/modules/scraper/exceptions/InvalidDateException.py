@@ -1,3 +1,0 @@
-
-class InvalidDateComparisonError(Exception):
-    pass
