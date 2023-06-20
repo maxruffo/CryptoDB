@@ -8,8 +8,7 @@ import os
 
 def init_database(database_path = 'resources/database', database_name = 'database.db'):
     database_folder = 'resources/database'
-    database_file = 'database.db'
-    database_path = os.path.join(database_folder, database_file)
+    database_path = os.path.join(database_folder, database_name)
 
     # Überprüfen, ob der Ordner bereits existiert, andernfalls erstellen
     if not os.path.exists(database_folder):
@@ -58,9 +57,9 @@ def init_database(database_path = 'resources/database', database_name = 'databas
         # Änderungen speichern und die Verbindung zur Datenbank schließen
         conn.commit()
         conn.close()
-        print(f'Datenbankdatei {database_file} wurde erstellt.')
+        print(f'Datenbankdatei {database_name} wurde erstellt.')
     else:
-        print(f'Datenbankdatei {database_file} existiert bereits.')
+        print(f'Datenbankdatei {database_name} existiert bereits.')
 
 
 '''

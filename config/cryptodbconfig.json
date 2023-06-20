@@ -1,0 +1,16 @@
+{
+    "tickers": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "BNBUSDT"
+    ],
+    "database": true,
+    "csv": true,
+    "ndays": 30,
+    "start_date": "2023-05-20",
+    "end_date": "2023-06-19",
+    "databasefolder": "resources/database",
+    "databasename": "database.db",
+    "pricedatafolder": "resource/pricedata"
+  }
+  
