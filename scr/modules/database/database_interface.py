@@ -20,30 +20,4 @@ class DatabaseManager:
         database_app = SQLiteQueryTool(self.database_path)
         database_app.run()
 
-    def get_pricedata_for_ticker(self, ticker):
-        conn = sqlite3.connect(self.database_path)
-        query = f"SELECT * FROM PriceData WHERE ticker='{ticker}'"
-        data = pd.read_sql_query(query, conn)
-        conn.close()
-        return data
 
-    def get_pricedata_for_date_range(self, start_date, end_date):
-        conn = sqlite3.connect(self.database_path)
-        query = f"SELECT * FROM PriceData WHERE timestamp >= '{start_date}' AND timestamp <= '{end_date}'"
-        data = pd.read_sql_query(query, conn)
-        conn.close()
-        return data
-
-    def get_assets_by_sector(self, sector):
-        conn = sqlite3.connect(self.database_path)
-        query = f"SELECT * FROM Assets WHERE sector='{sector}'"
-        data = pd.read_sql_query(query, conn)
-        conn.close()
-        return data
-
-    def get_assets_by_type(self, asset_type):
-        conn = sqlite3.connect(self.database_path)
-        query = f"SELECT * FROM Assets WHERE type='{asset_type}'"
-        data = pd.read_sql_query(query, conn)
-        conn.close()
-        return data

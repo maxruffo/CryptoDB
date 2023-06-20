@@ -46,68 +46,42 @@ def get_tickers():
 '''
 FUNCTION: Takes a ticker_list, start and enddate and a given intervall time, downloads the price data for the given days and stores'''
 def download_data_for_dates(ticker_list, start_date, end_date, interval_minutes):
-    #Überprüfen falls nur ein Ticker wird es in eine Liste umgewandelt
     if isinstance(ticker_list, str):
-            ticker_list = [ticker_list]
+        ticker_list = [ticker_list]
 
-    num_threads = min(len(ticker_list), threading.active_count() + 1)
+    num_threads = min(len(ticker_list), threading.active_count())
 
-    def download_data(tickers):
-        for ticker in tickers:
-            download_historical_price_data(ticker, start_date, end_date, interval_minutes)
+    def download_data(ticker):
+        download_historical_price_data(ticker, start_date, end_date, interval_minutes)
 
-    # Liste der Aufgaben für jeden Thread aufteilen
-    task_list = []
-    chunk_size = len(ticker_list) // num_threads
-
-    for i in range(num_threads):
-        start_index = i * chunk_size
-        end_index = start_index + chunk_size if i < num_threads - 1 else None
-        task_list.append(ticker_list[start_index:end_index])
-
-    # Threads erstellen und ausführen
     threads = []
-    for task in task_list:
-        thread = threading.Thread(target=download_data, args=(task,))
+    for ticker in ticker_list:
+        thread = threading.Thread(target=download_data, args=(ticker,))
         thread.start()
         threads.append(thread)
 
-    # Warten, bis alle Threads ihre Aufgaben abgeschlossen haben
     for thread in threads:
         thread.join()
 
 
 def download_data_for_ndays(ticker_list, num_days, interval_minutes):
-    #Überprüfen falls nur ein Ticker wird es in eine Liste umgewandelt
     if isinstance(ticker_list, str):
-            ticker_list = [ticker_list]
+        ticker_list = [ticker_list]
 
     end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     start_date = end_date - timedelta(days=num_days)
 
-    num_threads = min(len(ticker_list), threading.active_count() + 1)
+    num_threads = min(len(ticker_list), threading.active_count())
 
-    def download_data(tickers):
-        for ticker in tickers:
-            download_historical_price_data(ticker, start_date, end_date, interval_minutes)
+    def download_data(ticker):
+        download_historical_price_data(ticker, start_date, end_date, interval_minutes)
 
-    # Liste der Aufgaben für jeden Thread aufteilen
-    task_list = []
-    chunk_size = len(ticker_list) // num_threads
-
-    for i in range(num_threads):
-        start_index = i * chunk_size
-        end_index = start_index + chunk_size if i < num_threads - 1 else None
-        task_list.append(ticker_list[start_index:end_index])
-
-    # Threads erstellen und ausführen
     threads = []
-    for task in task_list:
-        thread = threading.Thread(target=download_data, args=(task,))
+    for ticker in ticker_list:
+        thread = threading.Thread(target=download_data, args=(ticker,))
         thread.start()
         threads.append(thread)
 
-    # Warten, bis alle Threads ihre Aufgaben abgeschlossen haben
     for thread in threads:
         thread.join()
 

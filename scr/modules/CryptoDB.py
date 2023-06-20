@@ -121,10 +121,15 @@ class CryptoDB:
         
 
         if self.database == True:
-            db = DatabaseManager()
+            self.db = DatabaseManager()
             if self.csv == False:
                 delete_pricedata_folder()
-            db.start_database_app()
+
+    def run_app(self):
+        db = self.db
+        db.start_database_app()
+
+        
 
 
             
