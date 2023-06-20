@@ -1,23 +1,17 @@
 import sqlite3
 import os
 
-#from insert_assets.insert_crypto_into_assets import _insert_crypto
-#from insert_assets.insert_stocks_into_assets import _insert_stocks
-#from insert_pricedata.insert_data_into_pricedata import _insert_pricedata
-
-
-def init_database(database_path = 'resources/database', database_name = 'database.db'):
-    database_folder = 'resources/database'
-    database_path = os.path.join(database_folder, database_name)
+def init_database(database_name='database.db', database_path='resources/database'):
+    database_file = os.path.join(database_path, database_name)
 
     # Überprüfen, ob der Ordner bereits existiert, andernfalls erstellen
-    if not os.path.exists(database_folder):
-        os.makedirs(database_folder)
+    if not os.path.exists(database_path):
+        os.makedirs(database_path)
 
     # Überprüfen, ob die Datenbankdatei bereits existiert
-    if not os.path.exists(database_path):
+    if not os.path.isfile(database_file):
         # Verbindung zur Datenbank herstellen oder eine neue Datenbank erstellen
-        conn = sqlite3.connect(database_path)
+        conn = sqlite3.connect(database_file)
 
         # Ein Cursor-Objekt erstellen, um SQL-Abfragen auszuführen
         cursor = conn.cursor()
@@ -52,19 +46,11 @@ def init_database(database_path = 'resources/database', database_name = 'databas
             )
         ''')
 
-
-
         # Änderungen speichern und die Verbindung zur Datenbank schließen
         conn.commit()
         conn.close()
         print(f'Datenbankdatei {database_name} wurde erstellt.')
     else:
         print(f'Datenbankdatei {database_name} existiert bereits.')
-
-
-'''
-Für die erstellung der Big Database wo sich alle Ticker und Price Daten befinden
-'''
-
 
 

@@ -148,3 +148,12 @@ def update_data_for_yesterday(ticker_list, interval_minutes):
 
 
 
+tickers_list = ["BTCUSDT", "ETHUSDT", "LTCUSDT", "XRPUSDT", "ADAUSDT", "DOGEUSDT"]
+start_date = datetime(2023, 1, 1)
+end_date = datetime(2023, 1, 30)
+print(start_date)
+print(end_date)
+interval_minutes = 30
+days = 5
+
+download_data_for_ndays(tickers_list, days, interval_minutes)

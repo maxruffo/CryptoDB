@@ -5,95 +5,88 @@ import os
 from tkinter import messagebox, filedialog
 from tkinter.simpledialog import askstring
 
-def execute_sql():
-    global save_button  # Deklaration als globale Variable
+class SQLiteQueryTool:
+    def __init__(self, database_path=None):
+        self.database_path = database_path
+        self.save_button = None
 
-    # SQL-Befehl aus dem Textfeld abrufen
-    sql = sql_entry.get("1.0", tk.END)
+        self.window = tk.Tk()
+        self.window.title("SQLite Query Tool")
+        self.window.geometry("1080x720")
 
-    # Verbindung zur Datenbank herstellen
-    conn = sqlite3.connect(database_file)
-    cursor = conn.cursor()
+        self.select_button = tk.Button(self.window, text="Datenbank auswählen", command=self.select_database_file)
+        self.select_button.pack()
 
-    try:
-        # SQL-Befehl ausführen
-        cursor.execute(sql)
-        result = cursor.fetchall()
+        self.database_label = tk.Label(self.window, text="")
+        self.database_label.pack()
 
-        # Ergebnis im Textfeld anzeigen
-        result_text.delete("1.0", tk.END)
-        for row in result:
-            result_text.insert(tk.END, str(row) + "\n")
+        self.sql_entry = tk.Text(self.window, height=5)
+        self.sql_entry.pack(fill=tk.BOTH, expand=True)
 
-        # Vorherigen Speichern-Button entfernen, falls vorhanden
-        if save_button is not None:
-            save_button.pack_forget()
+        self.execute_button = tk.Button(self.window, text="Ausführen", command=self.execute_sql)
+        self.execute_button.pack()
 
-        # Speichern-Button hinzufügen
-        save_button = tk.Button(window, text="Speichern", command=lambda: save_csv(result, sql))
-        save_button.pack()
+        self.result_text = tk.Text(self.window, height=10)
+        self.result_text.pack(fill=tk.BOTH, expand=True)
 
-    except sqlite3.Error as e:
-        result_text.delete("1.0", tk.END)
-        result_text.insert(tk.END, "Fehler: " + str(e))
+        self.update_database_label()
 
-    # Verbindung zur Datenbank schließen
-    conn.close()
+    def select_database_file(self):
+        self.database_path = filedialog.askopenfilename(filetypes=[("SQLite-Datenbankdateien", "*.db")])
+        self.update_database_label()
 
-def save_csv(result, sql):
-    # Ordner 'Outputs' erstellen, falls nicht vorhanden
-    if not os.path.exists("Outputs"):
-        os.makedirs("Outputs")
+    def update_database_label(self):
+        if self.database_path:
+            self.database_label.config(text=f"Ausgewählte Datenbank: {self.database_path}")
+        else:
+            self.database_label.config(text="Keine Datenbank ausgewählt")
 
-    # Benutzernamen für die CSV-Datei abfragen
-    filename = askstring("Dateinamen eingeben", "Bitte geben Sie den Dateinamen ein:", initialvalue=sql)
+    def execute_sql(self):
+        if not self.database_path:
+            messagebox.showwarning("Datenbank fehlt", "Bitte wählen Sie eine Datenbank aus.")
+            return
 
-    if filename:
-        # Leerzeichen durch Unterstriche ersetzen
-        filename = filename.replace(" ", "_")
+        sql = self.sql_entry.get("1.0", tk.END)
 
-        # CSV-Datei speichern
-        output_path = os.path.join("Outputs", f"{filename}.csv")
-        with open(output_path, mode="w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerows(result)
+        conn = sqlite3.connect(self.database_path)
+        cursor = conn.cursor()
 
-        messagebox.showinfo("Speichern", f"Die Ausgabe wurde erfolgreich gespeichert:\n{output_path}")
-    else:
-        messagebox.showinfo("Speichern", "Die Ausgabe wurde nicht gespeichert.")
+        try:
+            cursor.execute(sql)
+            result = cursor.fetchall()
 
-def select_database_file():
-    global database_file
-    database_file = filedialog.askopenfilename(filetypes=[("SQLite-Datenbankdateien", "*.db")])
-    database_label.config(text=f"Ausgewählte Datenbank: {database_file}")
+            self.result_text.delete("1.0", tk.END)
+            for row in result:
+                self.result_text.insert(tk.END, str(row) + "\n")
 
-# GUI erstellen
-window = tk.Tk()
-window.title("SQLite Query Tool")
-window.geometry("1080x720")
+            if self.save_button:
+                self.save_button.pack_forget()
 
-# Datenbankdatei auswählen
-select_button = tk.Button(window, text="Datenbank auswählen", command=select_database_file)
-select_button.pack()
+            self.save_button = tk.Button(self.window, text="Speichern", command=lambda: self.save_csv(result, sql))
+            self.save_button.pack()
 
-# Label für ausgewählte Datenbank
-database_label = tk.Label(window, text="Keine Datenbank ausgewählt")
-database_label.pack()
+        except sqlite3.Error as e:
+            self.result_text.delete("1.0", tk.END)
+            self.result_text.insert(tk.END, "Fehler: " + str(e))
 
-# SQL-Eingabefeld
-sql_entry = tk.Text(window, height=5)
-sql_entry.pack(fill=tk.BOTH, expand=True)
+        conn.close()
 
-# Ausführen-Button
-execute_button = tk.Button(window, text="Ausführen", command=execute_sql)
-execute_button.pack()
+    def save_csv(self, result, sql):
+        if not os.path.exists("Outputs"):
+            os.makedirs("Outputs")
 
-# Ergebnis-Anzeige
-result_text = tk.Text(window, height=10)
-result_text.pack(fill=tk.BOTH, expand=True)
+        filename = askstring("Dateinamen eingeben", "Bitte geben Sie den Dateinamen ein:", initialvalue=sql)
 
-#Speichern-Button
-save_button = None
+        if filename:
+            filename = filename.replace(" ", "_")
+            output_path = os.path.join("Outputs", f"{filename}.csv")
+            with open(output_path, mode="w", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerows(result)
 
-#Gui Starten
-window.mainloop()
+            messagebox.showinfo("Speichern", f"Die Ausgabe wurde erfolgreich gespeichert:\n{output_path}")
+        else:
+            messagebox.showinfo("Speichern", "Die Ausgabe wurde nicht gespeichert.")
+
+    def run(self):
+        self.window.mainloop()
