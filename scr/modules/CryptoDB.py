@@ -24,8 +24,7 @@ class CryptoDB:
     def __init__(self, **kwargs):
         self.update_config(**kwargs)
         self.load_config()
-        self.run_jobs()
-
+        
     def update_config(self, **kwargs):
         config_file = 'config/cryptodbconfig.json'
 
@@ -129,7 +128,14 @@ class CryptoDB:
                 delete_pricedata_folder()
 
     def connect_database(self, databasefolder = None, databasename = None):
-        self.db.connect_to_existing_database(databasefolder=databasefolder,databasename=databasename)
+        if(databasefolder == None):
+            databasefolder = 'resources/database'
+        if(databasename == None):
+            databasename = 'database.db'
+        
+        db = DatabaseManager()
+        db.connect_to_existing_database(databasename=databasename,databasefolder=databasefolder)
+        self.db = db
 
     
 
