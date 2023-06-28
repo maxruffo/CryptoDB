@@ -24,12 +24,7 @@ class CryptoDB:
     def __init__(self, **kwargs):
         self.update_config(**kwargs)
         self.load_config()
-        try:
-            self.connect_database() #versuch direkt datenbank anzubinden
-        except Exception as e:
-            self.create_database()
-
-
+        
     def update_config(self, **kwargs):
         config_file = 'config/cryptodbconfig.json'
 
@@ -117,9 +112,6 @@ class CryptoDB:
         self.pricedatafolder = config["pricedatafolder"]
 
     def create_database(self):
-        if self.tickers == None:
-            print("Need a list of Tickers you need")
-            
         if self.ndays:
             download_data_for_ndays(ticker_list=self.tickers, num_days=self.ndays, interval_minutes=self.interval)
 

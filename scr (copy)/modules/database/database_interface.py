@@ -1,21 +1,21 @@
 import sqlite3
 import pandas as pd
-from .create_database import create_database,insert_data_to_database
+from .create_database_structure import init_database
+from .insert_data_in_database import insert_data
 from .database_app import SQLiteQueryTool
 import time
 import os
 
 
 class DatabaseManager:
-    
     def __init__(self, database_path='resources/database/database.db'):
         self.database_path = database_path
         
 
     def create_and_fill_database(self):
-        create_database()
+        init_database()
         time.sleep(1)
-        insert_data_to_database
+        insert_data()
 
     def connect_to_existing_database(self, databasefolder = None, databasename = None):
         if databasefolder is not None and databasename is not None:
