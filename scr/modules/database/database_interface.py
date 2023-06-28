@@ -1,8 +1,9 @@
 import sqlite3
 import pandas as pd
-from create_database import create_database,insert_data_to_database
-from database_app import SQLiteQueryTool
+from .create_database import create_database,insert_data_to_database
+from .database_app import SQLiteQueryTool
 import os
+from datetime import datetime
 
 class DatabaseManager:
     def __init__(self, database_name='database.db', database_path='resources/database'):
@@ -99,3 +100,75 @@ class DatabaseManager:
         tickers = [item[0] for item in data] if data else []
 
         return tickers
+    
+    def get_last_dates(self):
+        if self.connection is None:
+            self.connect_to_existing_database()
+
+        cursor = self.connection.cursor()
+        query = "SELECT Ticker, MAX(Timestamp) FROM PriceData GROUP BY Ticker"
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        last_dates = {item[0]: item[1] for item in data} if data else {}
+
+        return last_dates
+    
+
+    def get_timestamp_distance(self):
+        '''
+        Function that calculates the distance in minutes between Timestamp field and the next entry for the last 10 entries of each ticker
+        '''
+
+        if self.connection is None:
+            self.connect_to_existing_database()
+
+        cursor = self.connection.cursor()
+
+        query = """
+        SELECT pd1.Ticker, pd1.Timestamp, MIN(pd2.Timestamp) AS NextTimestamp
+        FROM PriceData AS pd1
+        LEFT JOIN PriceData AS pd2 ON pd2.Ticker = pd1.Ticker AND pd2.Timestamp > pd1.Timestamp
+        WHERE pd1.Timestamp IN (
+            SELECT Timestamp
+            FROM PriceData
+            WHERE Ticker = pd1.Ticker
+            ORDER BY Timestamp DESC
+            LIMIT 10
+        )
+        GROUP BY pd1.Ticker, pd1.Timestamp
+        """
+
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        distances = []
+
+        for ticker, timestamp, next_timestamp in data:
+            if next_timestamp:
+                distance = int((datetime.strptime(next_timestamp, '%Y-%m-%d %H:%M:%S') - datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')).total_seconds() / 60)
+                distances.append(distance)
+
+        unique_distances = list(set(distances))
+        if len(unique_distances) == 1:
+            return unique_distances[0]
+        else:
+            return None
+    
+# Create an instance of DatabaseManager
+database_manager = DatabaseManager()
+
+# Connect to the existing database
+database_manager.connect_to_existing_database()
+
+# Retrieve the last dates for each ticker
+last_dates = database_manager.get_timestamp_distance()
+print(last_dates)
+# Print the last dates
+"""for ticker, last_date in last_dates.items():
+    print(f"Last date for {ticker}: {last_date}")
+
+latest_date = min(last_dates.values())
+
+date_object = datetime.strptime(date_string, "%Y-%m-%d")
+print("Latest Date:", type(latest_date))"""
