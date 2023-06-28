@@ -20,6 +20,7 @@ from .database.database_interface import DatabaseManager
 @param databasename: Name of the database file (string)
 @param pricedatafolder: Folder path for the price data (string)
 '''
+
 class CryptoDB:
     def __init__(self, **kwargs):
         self.update_config(**kwargs)

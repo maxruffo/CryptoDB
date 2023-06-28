@@ -4,14 +4,6 @@ from create_database import create_database,insert_data_to_database
 from database_app import SQLiteQueryTool
 import os
 
-
-import sqlite3
-import pandas as pd
-from create_database import create_database, insert_data_to_database
-from database_app import SQLiteQueryTool
-import os
-
-
 class DatabaseManager:
     def __init__(self, database_name='database.db', database_path='resources/database'):
         self.database_name = database_name
@@ -95,3 +87,15 @@ class DatabaseManager:
 
 
 
+    def get_tickers(self):
+        if self.connection is None:
+            self.connect_to_existing_database()
+
+        cursor = self.connection.cursor()
+        query = "SELECT ticker FROM Assets"
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        tickers = [item[0] for item in data] if data else []
+
+        return tickers
