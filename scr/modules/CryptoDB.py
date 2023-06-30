@@ -28,9 +28,9 @@ from .utils.progress_wrapper import time_wrapper
 class CryptoDB:
     def __init__(self, **kwargs):
         self.update_parameters(**kwargs)
-        self.update_parameters()
         try:
             self.connect_database()
+
         except Exception as e:
             self.create_database()
 
@@ -99,8 +99,7 @@ class CryptoDB:
 
         elif self.ndays is None and (self.start_date and self.end_date):
             self.scraper.download_data_for_dates(ticker_list=self.tickers, start_date=self.start_date, end_date=self.end_date, interval_minutes=self.interval)
-        
-            
+         
         
         db = DatabaseManager()
         db.create_and_fill_database()
@@ -142,9 +141,11 @@ class CryptoDB:
     
     def get_missing_tickers(self):
         available_tickers = self.db.get_tickers()
-        missing_tickers = [ticker for ticker in self.tickers if ticker not in available_tickers]
+        if available_tickers:
+            missing_tickers = [ticker for ticker in self.tickers if ticker not in available_tickers]
+            return missing_tickers
         
-        return missing_tickers
+        return False
     
    
     def get_missing_days(self):
