@@ -57,5 +57,12 @@ class DataDownloader:
         for thread in threads:
             thread.join()
 
+'''
+downloader = DataDownloader(pricedata_folder='resources/pricedata', progress=True)
 
+ticker_list = ['BTCUSDT', 'ETHUSDT']  # Liste der Tickersymbole
+num_days = 7  # Anzahl der vergangenen Tage
+interval_minutes = 15  # Intervall in Minuten
 
+downloader.download_data_for_ndays(ticker_list, num_days, interval_minutes)
+'''

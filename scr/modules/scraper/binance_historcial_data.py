@@ -13,7 +13,7 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
 
     url = "https://api.binance.com/api/v3/klines"
 
-    output_folder = os.path.join(pricedata_folder,f'/{ticker}')
+    output_folder = os.path.join(pricedata_folder,f'{ticker}')
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
