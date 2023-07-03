@@ -6,11 +6,16 @@ import os
 from datetime import datetime
 
 class DatabaseManager:
-    def __init__(self, database_name='database.db', database_path='resources/database'):
+    def __init__(self, database_name='database.db', database_path='resources/database',pricedata_folder='resources/pricedata', progress=True):
         self.database_name = database_name
         self.database_path = database_path
         self.connection = None
+        self.progress = progress
 
+        self.pricedata_folder = pricedata_folder
+        if self.pricedata_folder is None:
+            self.pricedata_folder = 'resources/pricedata'
+        
         if not self.check_database_exists():
             self.create_and_fill_database()
 
@@ -101,7 +106,24 @@ class DatabaseManager:
 
         return tickers
     
-    def get_last_dates(self):
+    def insert_tickers(self, tickers):
+        if isinstance(tickers, str):
+            tickers = [tickers]
+
+        if self.connection is None:
+            self.connect_to_existing_database()
+
+        cursor = self.connection.cursor()
+        for ticker in tickers:
+            query = f"INSERT INTO Tickers (Ticker) VALUES ('{ticker}')"
+            cursor.execute(query)
+
+        self.connection.commit()
+
+    
+
+
+    def get_last_date(self):
         if self.connection is None:
             self.connect_to_existing_database()
 
@@ -112,8 +134,15 @@ class DatabaseManager:
 
         last_dates = {item[0]: item[1] for item in data} if data else {}
 
-        return last_dates
-    
+        oldest_date = None
+        for ticker, date_str in last_dates.items():
+            date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+            if oldest_date is None or date < oldest_date:
+                oldest_date = date
+
+        return oldest_date
+
+
 
     def get_timestamp_distance(self):
         '''
@@ -154,6 +183,8 @@ class DatabaseManager:
             return unique_distances[0]
         else:
             return None
+        
+
     
 # Create an instance of DatabaseManager
 database_manager = DatabaseManager()

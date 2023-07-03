@@ -41,10 +41,9 @@ class CryptoDB:
 
         self._check_params()
 
-        try :
-            self._connect_database()
-        except Exception as e:
-            print(e)
+        
+        self._connect_database()
+        
             
 
     @Logger
@@ -65,19 +64,18 @@ class CryptoDB:
 
         if (self.start_date or self.end_date) and self.ndays:
             raise ValueError("Both start_date/end_date and ndays cannot be specified simultaneously.")
-        
+    
         elif self.start_date and self.end_date:
-            self.start_date= self.start_date.strftime("%Y-%m-%d")
-            self.end_date = self.end_date.strftime("%Y-%m-%d")
+            if isinstance(self.start_date, str):
+                self.start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
+            if isinstance(self.end_date, str):
+                self.end_date = datetime.strptime(self.end_date, "%Y-%m-%d")
             self.ndays = None
         
         elif self.start_date and self.end_date is None:
-            self.start_date = self.start_date.strftime("%Y-%m-%d")
+            if isinstance(self.start_date, str):
+                self.start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
             self.end_date = date.today()
-        
-        elif self.ndays:
-            self.start_date = None
-            self.end_date = None
     @Logger
     def _connect_database(self):
         self.db = DatabaseManager(self.database_name, self.database_folder)
@@ -85,6 +83,7 @@ class CryptoDB:
 
         if self._check_database_status_for_missing_data():
             self.update_database()
+
     @Logger
     def _check_database_status_for_missing_data(self):
 
@@ -93,12 +92,8 @@ class CryptoDB:
         if missing_tickers:
             return True
         
-        if self.ndays is not None:
-            end_date = datetime.now().date()
-        else:
-            end_date = self.end_date
 
-        missing_days = self.get_missing_days(end_date)
+        missing_days = self.get_missing_days()
         if missing_days:
             return True
 
@@ -113,18 +108,16 @@ class CryptoDB:
         return False
     
     @Logger
-    def get_missing_days(self,end_date):
-        missing_days = []
-
-        for ticker in self.tickers:
-            last_available_date = self.db.get_last_dates()
-            if last_available_date is not None:
-                start_date = last_available_date + timedelta(days=1)
-                missing_range = pd.date_range(start=start_date, end=end_date)
-                missing_days.extend(missing_range)
-
-        missing_days = list(set(missing_days)) 
-        return missing_days
+    def get_missing_days(self):
+        last_date = self.db.get_last_date()
+        print("Acutg")
+        print(last_date)
+        print(date.today())
+        if last_date == date.today():
+            return False
+        else:
+            return self.db.get_last_date()
+    
 
     @Logger
     def update_database(self):
@@ -132,20 +125,33 @@ class CryptoDB:
         if interval == None:
             interval = self.interval
         
-        missing_tickers = self._get_missing_tickers()
+        missing_tickers = self.get_missing_tickers()
         if missing_tickers:
+            self.db.insert_tickers(missing_tickers)
             if self.ndays == None:
-                self.scraper.download_historical_price_data(missing_tickers, self.start_date, self.end_date, self.interval)
+                self.scraper.download_data_for_dates(missing_tickers, self.start_date, self.end_date, interval)
             else:
-                self.scraper.download_historical_price_data(missing_tickers, self.ndays, self.interval)
+                self.scraper.download_data_for_ndays(missing_tickers, self.ndays, self.interval)
 
-            missing_days = self._get_missing_days(self.end_date)
-            if missing_days:
-                if self.ndays == None:
-                    self.scraper.download_historical_price_data(missing_tickers, missing_days, self.interval)
+        missing_days = self.get_missing_days()
+        print(type(missing_days))
+        if missing_days:
+            if self.ndays == None:
+                print(missing_days)
+                print(type(self.end_date))
+                print(self.end_date)
+                self.scraper.download_data_for_dates(self.tickers, missing_days, self.end_date, self.interval)
+            else:
+                self.scraper.download_data_for_ndays(self.tickers, self.ndays, self.interval)
 
 
 
 
 
-test_db = CryptoDB(tickers=["BTCUSDT","ETHUSDT"],ndays=3,database=True,csv=False, interval=15)
+#test_db = CryptoDB(tickers=["BTCUSDT","ETHUSDT"],ndays=3,database=True,csv=False, interval=15)
+start_date = datetime(2021,1,1)
+end_date = datetime(2021,1,3)
+
+
+
+test_db2 = CryptoDB(tickers=["BTCUSDT","ETHUSDT"],start_date=start_date,end_date=end_date,database=True,csv=False, interval=15)

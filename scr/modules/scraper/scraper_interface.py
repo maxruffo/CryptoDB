@@ -8,6 +8,7 @@ from .binance_historcial_data import download_historical_price_data
 class DataDownloader:
     def __init__(self, pricedata_folder='resources/pricedata', progress=True):
         self.progress = progress
+        self.pricedata_folder = pricedata_folder
 
         if pricedata_folder is not None:
             if not os.path.exists(pricedata_folder):
@@ -30,7 +31,6 @@ class DataDownloader:
 
         threads = []
         for ticker in ticker_list:
-            print(ticker + " wird heruntergeladen")
             thread = threading.Thread(target=download_data, args=(ticker,))
             thread.start()
             threads.append(thread)
