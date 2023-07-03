@@ -4,7 +4,8 @@ import csv
 from datetime import datetime, timedelta
 
 
-
+# implement in the function download_historical_price_data that before it downloads the data it checks with get_binance_ticker_symbols if the ticker is valid
+# if not raise an exception
 
 def download_historical_price_data(ticker, start_date, end_date, interval_minutes,pricedata_folder = 'resources/pricedata', progress=True):
     '''
@@ -12,6 +13,10 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
     '''
 
     url = "https://api.binance.com/api/v3/klines"
+
+    valid_tickers = get_binance_ticker_symbols()
+    if ticker not in valid_tickers:
+        raise Exception("Invalid ticker symbol")
 
     output_folder = os.path.join(pricedata_folder,f'{ticker}')
     if not os.path.exists(output_folder):
@@ -75,21 +80,18 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
 
 
 
+def get_binance_ticker_symbols():
+    url = 'https://api.binance.com/api/v3/exchangeInfo'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+        symbols = [symbol['symbol'] for symbol in data['symbols']]
+        return symbols
+    
+    except requests.exceptions.RequestException as e:
+        print('Error occurred:', e)
 
 
 

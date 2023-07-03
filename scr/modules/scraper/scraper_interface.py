@@ -7,8 +7,13 @@ from .binance_historcial_data import download_historical_price_data
 
 class DataDownloader:
     def __init__(self, pricedata_folder='resources/pricedata', progress=True):
-        self.pricedata_folder = pricedata_folder
         self.progress = progress
+
+        if pricedata_folder is not None:
+            if not os.path.exists(pricedata_folder):
+                os.makedirs(pricedata_folder)
+        if pricedata_folder is None:
+            self.pricedata_folder = 'resources/pricedata'
 
     def download_data_for_dates(self, ticker_list, start_date, end_date, interval_minutes):
         '''
@@ -25,6 +30,7 @@ class DataDownloader:
 
         threads = []
         for ticker in ticker_list:
+            print(ticker + " wird heruntergeladen")
             thread = threading.Thread(target=download_data, args=(ticker,))
             thread.start()
             threads.append(thread)
@@ -57,12 +63,3 @@ class DataDownloader:
         for thread in threads:
             thread.join()
 
-
-'''downloader = DataDownloader(pricedata_folder='resources/pricedata', progress=True)
-
-ticker_list = ['BTCUSDT', 'ETHUSDT']  # Liste der Tickersymbole
-num_days = 7  # Anzahl der vergangenen Tage
-interval_minutes = 15  # Intervall in Minuten
-
-downloader.download_data_for_ndays(ticker_list, num_days, interval_minutes)
-'''

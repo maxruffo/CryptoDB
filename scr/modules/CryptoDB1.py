@@ -8,7 +8,7 @@ from .scraper.scraper_interface import DataDownloader
 from .database.database_interface import DatabaseManager
 from .utils.progress_wrapper import time_wrapper
 
-# Jetzt können Sie die Methoden und Klassen aus "scraper_interface" verwenden
+
 
 '''
 @param ticker: List of String for the Ticker 
@@ -59,6 +59,13 @@ class CryptoDB:
         self.database_name = kwargs.get("database_name")
         self.pricedata_folder =  kwargs.get("pricedata_folder")
 
+        if self.pricedata_folder is None:
+            self.pricedata_folder = 'resources/pricedata'
+        if self.database_folder is None:
+            self.database_folder = 'resources/database'
+        if self.database_name is None:
+            self.database_name = 'database.db'
+
         self.scraper = DataDownloader(kwargs.get(self.pricedata_folder))
 
         start_date = kwargs.get("start_date")
@@ -80,16 +87,6 @@ class CryptoDB:
             parameters["start_date"] = None
             parameters["end_date"] = None
 
-        
-
-
-
-
-
-
-
-
-   
     def create_database(self):
         if self.tickers is None:
             print("Eine Liste von Tickers wird benötigt.")
@@ -184,7 +181,7 @@ class CryptoDB:
 
     def run_app(self):
         db = self.db
-        db.start_database_app()
+        db.start_database_app_GUI()
 
     def get_price_data(self, ticker_list=None):
         if ticker_list is None:
