@@ -110,8 +110,8 @@ class CryptoDB:
     @Logger
     def get_missing_days(self):
         last_date = self.db.get_last_date()
-        print("Acutg")
-        print(last_date)
+        today = datetime.today()
+        print(today)
         print(date.today())
         if last_date == date.today():
             return False
