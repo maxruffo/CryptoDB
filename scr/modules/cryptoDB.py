@@ -135,12 +135,16 @@ class CryptoDB:
                 self.scraper.download_data_for_ndays(self.tickers, self.ndays, self.interval)
 
 
+    def start_sql_GUI(self):
+        self.db.start_database_app_GUI()
+
+
 
 
 
 #test_db = CryptoDB(tickers=["BTCUSDT","ETHUSDT"],ndays=3,database=True,csv=False, interval=15)
 start_date = datetime(2021,1,1)
-end_date = datetime(2021,1,3)
+end_date = datetime(2021,2,3)
 
 print(start_date)
 print(end_date)
@@ -148,3 +152,4 @@ print(end_date)
 
 
 test_db2 = CryptoDB(tickers=["BTCUSDT","ETHUSDT"],start_date=start_date,end_date=end_date, interval=15)
+test_db2.start_sql_GUI()
