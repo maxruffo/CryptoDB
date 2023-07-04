@@ -62,4 +62,15 @@ class DataDownloader:
 
         for thread in threads:
             thread.join()
+            
 
+    def delete_pricedata(self):
+        '''
+        Function that deletes the pricedata
+        '''
+
+        if os.path.exists(self.pricedata_folder):
+            shutil.rmtree(self.pricedata_folder)
+            print(f"Pricedata deleted")
+        else:
+            print(f"Pricedata does not exist")

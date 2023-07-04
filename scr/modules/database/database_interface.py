@@ -26,6 +26,7 @@ class DatabaseManager:
 
 
 
+
     def create_and_fill_database(self, pricedata_folder='resources/pricedata', progress=True):
         '''
         Function that connects to a SQL Database and inserts the data from csv files located in 'resources/pricedata'
@@ -33,6 +34,30 @@ class DatabaseManager:
 
         create_database(self.database_name, self.database_path, progress)
         insert_data_to_database(self.database_name, self.database_path, pricedata_folder, progress)
+
+
+
+    def create_database(self):
+        '''
+        Function that creates a SQL Database
+        '''
+
+        create_database(self.database_name, self.database_path, self.progress)
+    
+
+    def insert_data_to_database(self, pricedata_folder='resources/pricedata', progress=True):
+        insert_data_to_database(self.database_name, self.database_path, pricedata_folder, progress)
+
+    def delete_database(self):
+        '''
+        Function that deletes the database
+        '''
+        if self.check_database_exists():
+            os.remove(os.path.join(self.database_path, self.database_name))
+            
+            print(f"Database {self.database_name} deleted")
+        else:
+            print(f"Database {self.database_name} does not exist")
 
 
 
