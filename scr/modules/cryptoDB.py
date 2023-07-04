@@ -28,8 +28,6 @@ class CryptoDB:
     @Logger
     def __init__(self, **kwargs):
         self.tickers = kwargs.get("tickers")
-        self.use_database =  kwargs.get("use_database")
-        self.use_csv= kwargs.get("use_csv")
         self.ndays=kwargs.get("ndays")
         self.interval= kwargs.get("interval")
         self.start_date = kwargs.get("start_date")
@@ -56,8 +54,7 @@ class CryptoDB:
             self.database_name = 'database.db'
         if self.progress is None:
             self.progress = True
-        if self.use_database is None:
-            self.use_database = True
+        
 
 
         self.scraper = DataDownloader(self.pricedata_folder, self.progress)
@@ -110,9 +107,6 @@ class CryptoDB:
     @Logger
     def get_missing_days(self):
         last_date = self.db.get_last_date()
-        today = datetime.today()
-        print(today)
-        print(date.today())
         if last_date == date.today():
             return False
         else:
@@ -134,12 +128,8 @@ class CryptoDB:
                 self.scraper.download_data_for_ndays(missing_tickers, self.ndays, self.interval)
 
         missing_days = self.get_missing_days()
-        print(type(missing_days))
         if missing_days:
             if self.ndays == None:
-                print(missing_days)
-                print(type(self.end_date))
-                print(self.end_date)
                 self.scraper.download_data_for_dates(self.tickers, missing_days, self.end_date, self.interval)
             else:
                 self.scraper.download_data_for_ndays(self.tickers, self.ndays, self.interval)
@@ -152,6 +142,9 @@ class CryptoDB:
 start_date = datetime(2021,1,1)
 end_date = datetime(2021,1,3)
 
+print(start_date)
+print(end_date)
 
 
-test_db2 = CryptoDB(tickers=["BTCUSDT","ETHUSDT"],start_date=start_date,end_date=end_date,database=True,csv=False, interval=15)
+
+test_db2 = CryptoDB(tickers=["BTCUSDT","ETHUSDT"],start_date=start_date,end_date=end_date, interval=15)

@@ -186,20 +186,3 @@ class DatabaseManager:
         
 
     
-# Create an instance of DatabaseManager
-database_manager = DatabaseManager()
-
-# Connect to the existing database
-database_manager.connect_to_existing_database()
-
-# Retrieve the last dates for each ticker
-last_dates = database_manager.get_timestamp_distance()
-print(last_dates)
-# Print the last dates
-"""for ticker, last_date in last_dates.items():
-    print(f"Last date for {ticker}: {last_date}")
-
-latest_date = min(last_dates.values())
-
-date_object = datetime.strptime(date_string, "%Y-%m-%d")
-print("Latest Date:", type(latest_date))"""
