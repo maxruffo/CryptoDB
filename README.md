@@ -1,4 +1,5 @@
 <!-- PROJECT LOGO -->
+
 <br />
 <div align="center">
   <a href="https://github.com/maxruffo/CryptoDB">
@@ -11,13 +12,15 @@
   </p>
 </div>
 
-# Getting Started
 ## Install the Requiriments
-```
+
+```sh
 pip install -r requirements.txt
 ```
+
 ## How to use it
-```
+
+```py
 from cryptodb import CryptoDB
 
 db = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], ndays=10, interval=30, progress=False, use_database=True, use_csv=False)
