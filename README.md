@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/maxruffo/CryptoDB">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="250" height="200">
   </a>
   <h3 align="center">CryptoDB</h3>
   <p align="center">
