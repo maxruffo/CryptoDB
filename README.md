@@ -22,12 +22,13 @@ pip install -r requirements.txt
 
 ```py
 from cryptodb import CryptoDB
-
+# Download for ndays
 db = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], ndays=10, interval=30, progress=False, use_database=True, use_csv=False)
 OR
+# Download for a specific date range
 db = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], start_date='2021-01-01', end_date='2021-01-10', interval=30, progress=False, use_database=True, use_csv=False)
 
-# get the availabke ticker symbols
+# get the available ticker symbols
 tickersymbols = db.get_available_ticker_symbols()
 print(tickersymbols)
 
