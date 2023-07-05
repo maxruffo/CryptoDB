@@ -1,35 +1,42 @@
-# Cryptocurrencies-Data
+# CryptocurrenciesSQLiteDatabase
+
+```sh
+# CryptocurrenciesSQLiteDatabase-CryptoDB
+This is a Python Projekt that creates a .db file with the K-Line Data of given Cryptoccurencies tickersymbols
+## Getting Started
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Best-README-Template</h3>
+
+  <p align="center">
+    An awesome README template to jumpstart your projects!
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    ·
+    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+  </p>
+</div>
+
+
+[![My Skills](https://skillicons.dev/icons?i=py)](https://skillicons.dev)   
+
+
+## Description
+This is a project, where two Clients can communicate with each other, while the messages are encrypted with an Enigma Algorithm
+## Installation
+
+## About
+
+```
 
 ```sh
 
 ```
-
-Wie soll der Code Funktionieren:
-
-- Nutzer gibt diese daten an:
-- Ticker -> Liste von Strings mit Ticker
-- Intervall -> Intervall in Minuten also abstände der Daten
-- Start_date -> Datetime wann daten anfangen sollen
-- End_date -> bis wann die Daten gehen sollen
-   ODER:
-- Ndays: rücklaufend wie viele Tage heruntergeladen werden sollen
-
-Dann:
-
-- Falls es eine Datenbank datei schon gibt soll er sich mit dieser Datenbank anbinden und verwenden, dann schaut er ob die Nötigen Daten also Ticker und PriceData vorhanden sind, falls nicht updated er die Daten um  die Api Calls zu minimieren
-
-This Repository is updated daily with new Cryptoccurencies Data
-
-## To - Do Open
-
-- GROßES PROBLEM: download_historical_price_data das wenn falsche ticker angegeben Exception
-- so machen das wenn man CryptoDB objekt erstellt man auch mit einer Datenbank verbinden kann anstatt das sie direkt erstellt wird
-- methide erstellen welche daten von gestern uodated mit workflow
-
-## To - Do Done
-
-- aktuelles datum -1tag werden die daten auch für akutellen tag abgespeichert sollte nicht so sein
-- datenbank namen ändern
-- interface hinzufügen sodass für einen bestimmten ticker die Preis daten als datafram zurück gegeben werden
-- so machen das ab 00 bis 23:59 heruntergeladen wird
-- pricedata übergabe mit parameter include true oder false ob enddatum mit einzuschließen oder nicht
