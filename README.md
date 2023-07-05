@@ -43,3 +43,8 @@ db.start_sqlite_GUI()
 ```
 
 ### You can also see this in the example.ipynb
+
+## Used Techstack
+- SQlite
+- APIs -> Binance Api
+- Threading
