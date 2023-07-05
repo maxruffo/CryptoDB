@@ -1,42 +1,42 @@
-# CryptocurrenciesSQLiteDatabase
-
-```sh
-# CryptocurrenciesSQLiteDatabase-CryptoDB
-This is a Python Projekt that creates a .db file with the K-Line Data of given Cryptoccurencies tickersymbols
-## Getting Started
+<!-- PROJECT LOGO -->
+<br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/maxruffo/CryptoDB">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
-
-  <h3 align="center">Best-README-Template</h3>
-
+  <h3 align="center">CryptoDB</h3>
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Get a simple SQLite Database with PriceData for Cryptocurrencies
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
   </p>
 </div>
 
+# Getting Started
+## Install the Requiriments
+```
+pip install -r requirements.txt
+```
+## How to use it
+```
+from cryptodb import CryptoDB
 
-[![My Skills](https://skillicons.dev/icons?i=py)](https://skillicons.dev)   
+db = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], ndays=10, interval=30, progress=False, use_database=True, use_csv=False)
+OR
+db = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], start_date='2021-01-01', end_date='2021-01-10', interval=30, progress=False, use_database=True, use_csv=False)
 
+# get the availabke ticker symbols
+tickersymbols = db.get_available_ticker_symbols()
+print(tickersymbols)
 
-## Description
-This is a project, where two Clients can communicate with each other, while the messages are encrypted with an Enigma Algorithm
-## Installation
+# get price data for one ticker
+pricedata = db.get_price_data('BTCUSDT')
 
-## About
+# get price data for multiple tickers
+pricedata = db.get_price_data(['BTCUSDT','ETHUSDT'])
+
+# start the SQL GUI
+db.start_sqlite_GUI()
 
 ```
 
-```sh
-
-```
+### You can also see this in the example.ipynb
