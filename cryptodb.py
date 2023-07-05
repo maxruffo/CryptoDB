@@ -1,9 +1,9 @@
 
-from datetime import datetime, timedelta, date
-import pandas as pd
-from scraper.scraper_interface import DataDownloader
-from database.database_interface import DatabaseManager
-from logger.logging import Logger
+from datetime import datetime, date
+from scr.modules.scraper.scraper_interface import DataDownloader
+from scr.modules.database.database_interface import DatabaseManager
+from scr.modules.logger.logging import Logger
+
 
 class CryptoDB:
     @Logger
@@ -68,20 +68,30 @@ class CryptoDB:
             if isinstance(self.start_date, str):
                 self.start_date = datetime.strptime(self.start_date, "%Y-%m-%d")
             self.end_date = date.today()
-
+    
+    @Logger
     def _run_all_with_params(self):
-        if self._check_database_status()==False:
-            if self.db.check_database_exists():
-                self.db.delete_database()
-                self._download_pricedata()
-                if self.use_database:
-                    self._create_database()
-                    self._insert_data_to_database()
-                if self.use_csv == False:
-                    self._delete_pricedata()
+        if self._check_database_status()==False or self.db.check_database_is_empty()==True:
+            self._delete_database()
+            self._download_pricedata()
+            if self.use_database:
+                self._create_database()
+                self._insert_data_to_database()
+            if self.use_csv == False:
+                self._delete_pricedata()
+        else:
+            self._download_pricedata()
+            if self.use_database:
+                self._insert_data_to_database()
+            if self.use_csv == False:
+                self._delete_pricedata()
+
+
+        
         
 
     # A Function that checks if the database is the same as the one that should be created
+    @Logger
     def _check_database_status(self):
         if self.db.check_database_exists():
             if self.db.get_tickers() == self.tickers:
@@ -90,48 +100,61 @@ class CryptoDB:
                         return True
         return False
 
-
+    @Logger
     def _create_database(self):
         self.db.create_database()
-    
+
+
+    @Logger
     def _delete_database(self):
         self.db.delete_database()
 
+
+    @Logger
     def _download_pricedata(self):
         if self.ndays == None:
             self.scraper.download_data_for_dates(self.tickers, self.start_date, self.end_date, self.interval)
         else:
             self.scraper.download_data_for_ndays(self.tickers, self.ndays, self.interval)
     
+    @Logger
     def _delete_pricedata(self):
         self.scraper.delete_pricedata()
 
+    @Logger
     def _insert_data_to_database(self):
         self.db.insert_data_to_database(self.pricedata_folder)
 
 
-    '''Methods that can be called by the user'''    
+    '''Methods that can be called by the user'''
 
+    @Logger
     def start_sqlite_GUI(self):
         self.db.start_database_app_GUI()
 
+    @Logger
+    def get_available_ticker_symbols(self):
+        return self.scraper.get_available_ticker_symbols()
+
+    @Logger
     def get_price_data(self, ticker):
         return self.db.get_price_data(ticker)
     
+    @Logger
     def get_tickers(self):
         return self.db.get_tickers()
     
+    @Logger
     def get_last_date(self):
         return self.db.get_last_date()
     
+    @Logger
     def get_timestamp_distance(self):
         return self.db.get_timestamp_distance()
     
+    @Logger
     def insert_tickers(self, tickers):
         self.db.insert_tickers(tickers)
     
 
-
-
-pricedatadb = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], ndays=10, interval_minutes=60, progress=True, use_database=True, use_csv=True)
-pricedatadb.start_sqlite_GUI()
+            

@@ -28,6 +28,19 @@ class DatabaseManager:
     def connect_to_existing_database(self):
         self.connection = sqlite3.connect(os.path.join(self.database_path, self.database_name))
 
+    def check_database_is_empty(self):
+        if self.connection is None:
+            self.connect_to_existing_database()
+
+        cursor = self.connection.cursor()
+        query = "SELECT * FROM PriceData LIMIT 1"
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        if data:
+            return False
+        else:
+            return True
 
     def create_and_fill_database(self, pricedata_folder='resources/pricedata', progress=True):
         create_database(self.database_name, self.database_path, progress)
@@ -85,7 +98,8 @@ class DatabaseManager:
                     ]
                 )
                 data_frames.append(df)
-                print(f"Price Data found for {ticker_item}\n")
+                if self.progress:
+                    print(f"Price Data found for {ticker_item}\n")
             else:
                 print(f"Price data NOT found for {ticker_item}\n")
 
@@ -142,10 +156,6 @@ class DatabaseManager:
 
 
     def get_timestamp_distance(self):
-        '''
-        Function that calculates the distance in minutes between Timestamp field and the next entry for the last 10 entries of each ticker
-        '''
-
         if self.connection is None:
             self.connect_to_existing_database()
 

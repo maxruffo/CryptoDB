@@ -1,5 +1,9 @@
 # Cryptocurrencies-Data
 
+```sh
+
+```
+
 Wie soll der Code Funktionieren:
 
 - Nutzer gibt diese daten an:

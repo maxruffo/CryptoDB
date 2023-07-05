@@ -1,9 +1,8 @@
-import json
 import os
 import threading
 from datetime import datetime, timedelta
 import shutil
-from .binance_historcial_data import download_historical_price_data
+from .binance_historcial_data import download_historical_price_data,get_binance_ticker_symbols
 
 class DataDownloader:
     def __init__(self, pricedata_folder='resources/pricedata', progress=True):
@@ -57,6 +56,8 @@ class DataDownloader:
         for thread in threads:
             thread.join()
             
+    def get_available_ticker_symbols(self):
+        return get_binance_ticker_symbols()
 
     def delete_pricedata(self):
         if os.path.exists(self.pricedata_folder):
@@ -64,3 +65,4 @@ class DataDownloader:
             print(f"Pricedata deleted")
         else:
             print(f"Pricedata does not exist")
+

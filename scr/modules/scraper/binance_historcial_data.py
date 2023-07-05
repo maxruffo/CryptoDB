@@ -3,9 +3,9 @@ import requests
 import csv
 from datetime import datetime, timedelta
 
-
-# implement in the function download_historical_price_data that before it downloads the data it checks with get_binance_ticker_symbols if the ticker is valid
-# if not raise an exception
+"""
+Everythin to do with the Binance API is in this Code so that if the Api changes we only have to change it here
+"""
 
 def download_historical_price_data(ticker, start_date, end_date, interval_minutes,pricedata_folder = 'resources/pricedata', progress=True):
     '''
@@ -27,7 +27,7 @@ def download_historical_price_data(ticker, start_date, end_date, interval_minute
     
     valid_intervals = [1, 3, 5, 15, 30]
     if interval_minutes not in valid_intervals:
-        raise Exception("This is intervall isnt available, please use: [1, 3, 5, 15, 30]")
+        raise Exception(f"This intervall:{interval_minutes} isnt available, please use: [1, 3, 5, 15, 30]")
 
    
     current_date = start_date
