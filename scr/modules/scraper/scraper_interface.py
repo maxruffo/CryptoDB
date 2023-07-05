@@ -13,13 +13,11 @@ class DataDownloader:
         if pricedata_folder is not None:
             if not os.path.exists(pricedata_folder):
                 os.makedirs(pricedata_folder)
+
         if pricedata_folder is None:
             self.pricedata_folder = 'resources/pricedata'
 
     def download_data_for_dates(self, ticker_list, start_date, end_date, interval_minutes):
-        '''
-        Function that downloads the data for a given ticker_list, start_date, end_date and intervall_minutes and saves it in 
-        '''
 
         if isinstance(ticker_list, str):
             ticker_list = [ticker_list]
@@ -39,10 +37,6 @@ class DataDownloader:
             thread.join()
 
     def download_data_for_ndays(self, ticker_list, num_days, interval_minutes):
-        '''
-        Function that downloads the data for a given ticker_list, start_date, end_date and intervall_minutes and saves it in 
-        '''
-
         if isinstance(ticker_list, str):
             ticker_list = [ticker_list]
 
@@ -65,10 +59,6 @@ class DataDownloader:
             
 
     def delete_pricedata(self):
-        '''
-        Function that deletes the pricedata
-        '''
-
         if os.path.exists(self.pricedata_folder):
             shutil.rmtree(self.pricedata_folder)
             print(f"Pricedata deleted")
