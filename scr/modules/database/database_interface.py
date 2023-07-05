@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-from .create_database import create_database,insert_data_to_database
+from .create_database import create_database,insert_data_to_database, insert_data_to_database_for_one_ticker
 from .database_app import SQLiteQueryTool
 import os
 from datetime import datetime
@@ -13,45 +13,39 @@ class DatabaseManager:
         self.progress = progress
 
         self.pricedata_folder = pricedata_folder
+
         if self.pricedata_folder is None:
             self.pricedata_folder = 'resources/pricedata'
         
-        if not self.check_database_exists():
-            self.create_and_fill_database()
-
+        if self.check_database_exists():
+            self.connect_to_existing_database()
+        
 
 
     def check_database_exists(self):
         return os.path.exists(os.path.join(self.database_path, self.database_name))
-
-
+    
+    def connect_to_existing_database(self):
+        self.connection = sqlite3.connect(os.path.join(self.database_path, self.database_name))
 
 
     def create_and_fill_database(self, pricedata_folder='resources/pricedata', progress=True):
-        '''
-        Function that connects to a SQL Database and inserts the data from csv files located in 'resources/pricedata'
-        '''
-
         create_database(self.database_name, self.database_path, progress)
         insert_data_to_database(self.database_name, self.database_path, pricedata_folder, progress)
 
 
-
     def create_database(self):
-        '''
-        Function that creates a SQL Database
-        '''
-
         create_database(self.database_name, self.database_path, self.progress)
     
 
     def insert_data_to_database(self, pricedata_folder='resources/pricedata', progress=True):
         insert_data_to_database(self.database_name, self.database_path, pricedata_folder, progress)
 
+    def insert_data_for_ticker(self, ticker, pricedata_folder='resources/pricedata', progress=True):
+        insert_data_to_database_for_one_ticker(self.database_name, self.database_path, ticker, pricedata_folder, progress)
+    
+
     def delete_database(self):
-        '''
-        Function that deletes the database
-        '''
         if self.check_database_exists():
             os.remove(os.path.join(self.database_path, self.database_name))
             
@@ -60,32 +54,13 @@ class DatabaseManager:
             print(f"Database {self.database_name} does not exist")
 
 
-
-    def connect_to_existing_database(self):
-        '''
-        Function that with a given database_name and database_path returns a sqlite3.Connection Object
-        '''
-        
-        self.connection = sqlite3.connect(os.path.join(self.database_path, self.database_name))
-
-
-
     def start_database_app_GUI(self):
-        '''
-        Function that starts the GUI for the SQL Database
-        '''
-
         direct_database_path = os.path.join(self.database_path, self.database_name)
         database_app = SQLiteQueryTool(direct_database_path)
         database_app.run()
 
 
-
     def get_price_data(self, ticker):
-        '''
-        Function that with a given ticker or list of tickers return a list of dataframes for the Pricedata
-        '''
-
         if self.connection is None:
             self.connect_to_existing_database()
 
@@ -117,7 +92,6 @@ class DatabaseManager:
         return data_frames
 
 
-
     def get_tickers(self):
         if self.connection is None:
             self.connect_to_existing_database()
@@ -130,7 +104,8 @@ class DatabaseManager:
         tickers = [item[0] for item in data] if data else []
 
         return tickers
-    
+
+
     def insert_tickers(self, tickers):
         if isinstance(tickers, str):
             tickers = [tickers]
@@ -146,8 +121,6 @@ class DatabaseManager:
         self.connection.commit()
 
     
-
-
     def get_last_date(self):
         if self.connection is None:
             self.connect_to_existing_database()
@@ -166,7 +139,6 @@ class DatabaseManager:
                 oldest_date = date
 
         return oldest_date
-
 
 
     def get_timestamp_distance(self):

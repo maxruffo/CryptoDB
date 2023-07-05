@@ -133,5 +133,5 @@ class CryptoDB:
 
 
 
-pricedatadb = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], ndays=10, interval_minutes=30, progress=True, use_database=True, use_csv=False)
+pricedatadb = CryptoDB(tickers=['BTCUSDT', 'ETHUSDT'], ndays=10, interval_minutes=60, progress=True, use_database=True, use_csv=True)
 pricedatadb.start_sqlite_GUI()

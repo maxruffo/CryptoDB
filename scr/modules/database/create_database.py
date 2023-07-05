@@ -64,7 +64,6 @@ def create_database(database_name='database.db', database_path='resources/databa
 
 
 
-
 def insert_data_to_database(database_name='database.db', database_path='resources/database', pricedata_folder = 'resources/pricedata', progress = True):
     '''
     Function that inserts the downloaded csv data in a SQL Database
@@ -115,3 +114,44 @@ def insert_data_to_database(database_name='database.db', database_path='resource
         print('Daten wurden erfolgreich in die Datenbank eingefügt.')
 
 
+
+
+def insert_data_to_database_for_one_ticker(ticker_name, database_name='database.db', database_path='resources/database', pricedata_folder='resources/pricedata', progress=True):
+    '''
+    Function that inserts the downloaded csv data for a specific ticker in a SQL Database
+    '''
+
+    database_path = os.path.join(database_path, database_name)
+
+    def insert_data_to_db(db_path, folder_path, ticker_name):
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        for file_name in os.listdir(folder_path):
+            if file_name.endswith('.csv'):
+                file_path = os.path.join(folder_path, file_name)
+                with open(file_path, 'r') as file:
+                    reader = csv.reader(file)
+                    next(reader)  # Überspringe den Header
+
+                    for row in reader:
+                        data_row = [ticker_name] + row
+                        cursor.execute("INSERT OR IGNORE INTO PriceData VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                       data_row)
+
+        conn.commit()
+        conn.close()
+
+    folder_path = os.path.join(pricedata_folder, ticker_name)
+    if os.path.isdir(folder_path):
+        conn = sqlite3.connect(database_path)
+        cursor = conn.cursor()
+        cursor.execute("INSERT OR IGNORE INTO Assets (ticker) VALUES (?)", (ticker_name,))
+
+        conn.commit()
+        conn.close()
+
+        insert_data_to_db(database_path, folder_path, ticker_name)
+
+    if progress:
+        print('Daten wurden erfolgreich für Ticker', ticker_name, 'in die Datenbank eingefügt.')
